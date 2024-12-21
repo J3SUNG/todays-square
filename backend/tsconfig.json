@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es2016" /* JavaScript 타겟 버전 설정 */,
+    "module": "commonjs" /* Node.js에서는 CommonJS 모듈 사용 */,
+    "esModuleInterop": true /* CommonJS 모듈 호환성 활성화 */,
+    "forceConsistentCasingInFileNames": true /* 대소문자 일관성 강제 */,
+    "strict": true /* 엄격한 타입 검사를 활성화 */,
+    "skipLibCheck": true /* .d.ts 파일 타입 검사를 생략 */,
+    "outDir": "./dist" /* 컴파일된 파일의 출력 디렉토리 */,
+    "rootDir": "./src" /* 소스 파일의 루트 디렉토리 */
+  },
+  "include": ["src/**/*"] /* 포함할 파일 경로 */,
+  "exclude": ["node_modules"] /* 제외할 파일 경로 */
+}
