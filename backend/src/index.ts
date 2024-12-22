@@ -1,11 +1,11 @@
 import express from "express";
-import routes from "./routes";
+import routes from "./routes"; // routes/index.ts를 가져오기
 
 const app = express();
 
 app.use(express.json());
 
-// 기본 API 라우트 연결
+// API 라우트 연결
 app.use("/api", routes);
 
 // 기본 라우트

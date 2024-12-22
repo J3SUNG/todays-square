@@ -1,9 +1,9 @@
-import express from "express";
-import { exampleHandler } from "../controllers/exampleController";
+import { Router } from "express";
+import usersRouter from "./users"; // 정확한 상대 경로 확인
 
-const router = express.Router();
+const router = Router();
 
-// 라우트 설정
-router.get("/example", exampleHandler);
+// Users API 연결
+router.use("/users", usersRouter);
 
 export default router;

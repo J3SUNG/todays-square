@@ -4,10 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const routes_1 = __importDefault(require("./routes"));
+const routes_1 = __importDefault(require("./routes")); // routes/index.ts를 가져오기
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
-// 기본 API 라우트 연결
+// API 라우트 연결
 app.use("/api", routes_1.default);
 // 기본 라우트
 app.get("/", (req, res) => {
