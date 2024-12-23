@@ -1,19 +1,16 @@
-/** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-
-const appStyles = css`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  font-family: Arial, sans-serif;
-  font-size: 1.5rem;
-  color: #333;
-  background-color: #f4f4f4;
-`;
+import GlobalStyles from "../shared/styles/globals";
+import Button from "../shared/Button";
 
 const App = () => {
-  return <div css={appStyles}>Hello, Todays Square!</div>;
+  return (
+    <>
+      <GlobalStyles />
+      <div>
+        <h1>Welcome to the Todays Square!</h1>
+        <Button onClick={() => console.log("Button clicked!")}>Click me!</Button>
+      </div>
+    </>
+  );
 };
 
 export default App;
