@@ -1,10 +1,10 @@
-import { login } from "../../entities/user";
+import { LoginRequest, login } from "../../entities/user";
 import { LoginForm } from "../../features/userAuth/ui/LoginForm";
 
 export const Login = () => {
-  const handleLogin = async (username: string, password: string) => {
+  const handleLogin = async (data: LoginRequest) => {
     try {
-      const response = await login(username, password);
+      const response = await login(data);
       if (response.success) {
         console.log("Login successful:", response);
         onLoginSuccess(response.token);
