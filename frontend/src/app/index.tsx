@@ -1,15 +1,17 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import GlobalStyles from "../shared/styles/globals";
-import Button from "../shared/Button";
+import Home from "../pages/Home";
+import Login from "../pages/Login";
 
 const App = () => {
   return (
-    <>
+    <BrowserRouter>
       <GlobalStyles />
-      <div>
-        <h1>Welcome to the Todays Square!</h1>
-        <Button onClick={() => console.log("Button clicked!")}>Click me!</Button>
-      </div>
-    </>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
