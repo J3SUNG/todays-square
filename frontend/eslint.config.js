@@ -6,7 +6,7 @@ import tseslint from "typescript-eslint";
 
 export default tseslint.config({
   ignores: ["dist"],
-  extends: [js.configs.recommended, ...tseslint.configs.recommended, "@feature-sliced"],
+  extends: [js.configs.recommended, ...tseslint.configs.recommended],
   files: ["**/*.{ts,tsx}"],
   languageOptions: {
     ecmaVersion: 2020,
@@ -19,13 +19,5 @@ export default tseslint.config({
   rules: {
     ...reactHooks.configs.recommended.rules,
     "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
-  },
-  parser: "@typescript-eslint/parser",
-  settings: {
-    "import/resolver": {
-      typescript: {
-        alwaysTryTypes: true,
-      },
-    },
   },
 });
