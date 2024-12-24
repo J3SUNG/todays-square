@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
 const homeStyles = css`
@@ -8,8 +9,6 @@ const homeStyles = css`
   font-size: 2rem;
 `;
 
-const Home = () => {
+export const Home = () => {
   return <div css={homeStyles}>Welcome to the Home Page!</div>;
 };
-
-export default Home;
