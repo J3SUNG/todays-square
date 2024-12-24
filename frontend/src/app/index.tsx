@@ -1,11 +1,9 @@
 import { AppRouter } from "./router";
-import { AppProviders } from "./providers";
-import { GlobalStyles } from "./styles";
+import { AppProviders } from "./providers/AppProviders";
 
 const App = () => {
   return (
     <AppProviders>
-      <GlobalStyles />
       <AppRouter />
     </AppProviders>
   );

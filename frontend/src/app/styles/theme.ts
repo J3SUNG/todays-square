@@ -5,6 +5,10 @@ const theme = {
     background: "#f4f4f4",
     text: "#333",
   },
+  fonts: {
+    body: "'Roboto', sans-serif",
+    heading: "'Poppins', sans-serif",
+  },
   fontSizes: {
     small: "0.8rem",
     medium: "1rem",
