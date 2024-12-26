@@ -1,2 +1,2 @@
-export { Home } from "./Home";
-export { Login } from "./Login";
+export { Home } from "./Home/Home.tsx";
+export { Login } from "./Login/Login.tsx";

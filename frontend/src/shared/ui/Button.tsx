@@ -1,5 +1,4 @@
-/** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
+import { StyledButton } from "./Button.styles";
 
 type ButtonProps = {
   text: string;
@@ -7,24 +6,11 @@ type ButtonProps = {
   onClick?: () => void;
 };
 
-const buttonStyles = css`
-  padding: 0.5rem 1rem;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #0056b3;
-  }
-`;
-
 const Button = ({ text, type = "button", onClick }: ButtonProps) => {
   return (
-    <button css={buttonStyles} type={type} onClick={onClick}>
+    <StyledButton type={type} onClick={onClick}>
       {text}
-    </button>
+    </StyledButton>
   );
 };
 

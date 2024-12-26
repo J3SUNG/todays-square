@@ -1,21 +1,12 @@
-/** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
 import { useState } from "react";
 import { validateLogin } from "../../../entities/user/model/validateLogin";
 import Button from "../../../shared/ui/Button";
 import { LoginRequest } from "../../../entities/user";
+import { LoginFormContainer, LoginFormInput } from "./LoginForm.styles";
 
 type LoginFormProps = {
   onLoginSubmit: (data: LoginRequest) => void;
 };
-
-const formStyles = css`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  width: 300px;
-  margin: auto;
-`;
 
 export const LoginForm = ({ onLoginSubmit }: LoginFormProps) => {
   const [username, setUserName] = useState("");
@@ -34,8 +25,8 @@ export const LoginForm = ({ onLoginSubmit }: LoginFormProps) => {
   };
 
   return (
-    <form css={formStyles} onSubmit={handleSubmit}>
-      <input
+    <LoginFormContainer onSubmit={handleSubmit}>
+      <LoginFormInput
         value={username}
         type="text"
         name="username"
@@ -43,7 +34,7 @@ export const LoginForm = ({ onLoginSubmit }: LoginFormProps) => {
         onChange={(e) => setUserName(e.target.value)}
         required
       />
-      <input
+      <LoginFormInput
         value={password}
         type="password"
         name="password"
@@ -52,6 +43,6 @@ export const LoginForm = ({ onLoginSubmit }: LoginFormProps) => {
         required
       />
       <Button type="submit" text="Login" />
-    </form>
+    </LoginFormContainer>
   );
 };
