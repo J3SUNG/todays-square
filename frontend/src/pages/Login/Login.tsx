@@ -1,5 +1,6 @@
 import { LoginRequest, login } from "../../entities/user";
 import { LoginForm } from "../../features/userAuth/ui/LoginForm";
+import { LoginContainer } from "./Login.styles";
 
 export const Login = () => {
   const handleLogin = async (data: LoginRequest) => {
@@ -22,9 +23,8 @@ export const Login = () => {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
+    <LoginContainer>
       <LoginForm onLoginSubmit={handleLogin} />
-    </div>
+    </LoginContainer>
   );
 };
