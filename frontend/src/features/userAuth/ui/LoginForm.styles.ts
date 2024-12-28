@@ -74,9 +74,9 @@ export const LoginFormButton = styled.button<{ primary?: boolean }>`
 
 export const LoginFormAuthButtonGroup = styled.div`
   display: flex;
-  justify-content: center; /* 가운데 정렬 */
-  gap: 1rem; /* 버튼 간 간격 */
-  margin: 1rem 0; /* 위아래 여백 */
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem 0;
 `;
 
 export const LoginFormAuthButton = styled.button<{ image?: string }>`
