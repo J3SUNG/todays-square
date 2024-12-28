@@ -79,13 +79,18 @@ export const LoginFormAuthButtonGroup = styled.div`
   margin: 1rem 0; /* 위아래 여백 */
 `;
 
-export const LoginFormAuthButton = styled.button`
+export const LoginFormAuthButton = styled.button<{ image?: string }>`
   width: 40px;
   height: 40px;
   background-color: white;
   border-radius: 8px;
   border: none;
   cursor: pointer;
+  background-image: ${({ image }) => `url(${image})`};
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: transparent;
 
   &:hover {
     opacity: 0.8;

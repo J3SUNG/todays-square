@@ -13,6 +13,10 @@ import {
   LoginFormInputLabel,
   LoginFormTitle,
 } from "./LoginForm.styles";
+import googleImg from "../../../shared/assets/authLogin/google.png";
+import naverImg from "../../../shared/assets/authLogin/naver.png";
+import kakaoImg from "../../../shared/assets/authLogin/kakao.png";
+import githubImg from "../../../shared/assets/authLogin/github.png";
 
 type LoginFormProps = {
   onLoginSubmit: (data: LoginRequest) => void;
@@ -60,10 +64,10 @@ export const LoginForm = ({ onLoginSubmit }: LoginFormProps) => {
         <LoginFormButton>게스트 로그인</LoginFormButton>
       </LoginFormButtonGroup>
       <LoginFormAuthButtonGroup>
-        <LoginFormAuthButton>F</LoginFormAuthButton> {/* 네이버 */}
-        <LoginFormAuthButton>K</LoginFormAuthButton> {/* 카카오 */}
-        <LoginFormAuthButton>G</LoginFormAuthButton> {/* 구글 */}
-        <LoginFormAuthButton>GH</LoginFormAuthButton> {/* 깃허브 */}
+        <LoginFormAuthButton image={googleImg} />
+        <LoginFormAuthButton image={naverImg} />
+        <LoginFormAuthButton image={kakaoImg} />
+        <LoginFormAuthButton image={githubImg} />
       </LoginFormAuthButtonGroup>
       <LoginFormFooterLinks>
         <a href="/signup">회원가입</a>
