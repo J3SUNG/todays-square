@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { validateLogin } from "../../../entities/user/model/validateLogin";
-import { LoginRequest } from "../../../entities/user";
+import { useAuthModel } from "../model/authModel";
 import {
   LoginFormAuthButton,
   LoginFormAuthButtonGroup,
@@ -13,29 +12,19 @@ import {
   LoginFormInputLabel,
   LoginFormTitle,
 } from "./LoginForm.styles";
-import googleImg from "../../../shared/assets/authLogin/google.png";
-import naverImg from "../../../shared/assets/authLogin/naver.png";
-import kakaoImg from "../../../shared/assets/authLogin/kakao.png";
-import githubImg from "../../../shared/assets/authLogin/github.png";
+import googleImg from "@/shared/assets/authLogin/google.png";
+import naverImg from "@/shared/assets/authLogin/naver.png";
+import kakaoImg from "@/shared/assets/authLogin/kakao.png";
+import githubImg from "@/shared/assets/authLogin/github.png";
 
-type LoginFormProps = {
-  onLoginSubmit: (data: LoginRequest) => void;
-};
-
-export const LoginForm = ({ onLoginSubmit }: LoginFormProps) => {
+export const LoginForm = () => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const { login } = useAuthModel();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!validateLogin(username, password)) {
-      alert("Please fill in both fields");
-      return;
-    }
-
-    const loginData: LoginRequest = { username, password };
-    onLoginSubmit(loginData);
+    login({ username, password });
   };
 
   return (
