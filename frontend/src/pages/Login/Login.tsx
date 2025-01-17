@@ -1,22 +1,20 @@
 import { useNavigate } from "react-router-dom";
-import { LoginRequest, login } from "../../entities/user";
 import { LoginForm } from "../../features/userAuth/ui/LoginForm";
 import { LoginContainer } from "./Login.styles";
+import { useAuthModel } from "../../features/userAuth/model/authModel";
+import { LoginRequest } from "../../entities/user";
 
 export const Login = () => {
   const navigate = useNavigate();
+  const { login } = useAuthModel();
 
   const handleLogin = async (data: LoginRequest) => {
-    const response = await login(data);
-
-    if (response.success) {
-      onLoginSuccess(response.token);
+    try {
+      await login(data);
+      navigate("/home");
+    } catch (error) {
+      console.error("Login failed:", error);
     }
-  };
-
-  const onLoginSuccess = (token: string) => {
-    console.log("Token received:", token);
-    navigate("/home");
   };
 
   return (

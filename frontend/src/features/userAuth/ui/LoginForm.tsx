@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useAuthModel } from "../model/authModel";
 import {
   LoginFormAuthButton,
   LoginFormAuthButtonGroup,
@@ -12,19 +11,22 @@ import {
   LoginFormInputLabel,
   LoginFormTitle,
 } from "./LoginForm.styles";
-import googleImg from "@/shared/assets/authLogin/google.png";
-import naverImg from "@/shared/assets/authLogin/naver.png";
-import kakaoImg from "@/shared/assets/authLogin/kakao.png";
-import githubImg from "@/shared/assets/authLogin/github.png";
+import googleImg from "../../../shared/assets/authLogin/google.png";
+import naverImg from "../../../shared/assets/authLogin/naver.png";
+import kakaoImg from "../../../shared/assets/authLogin/kakao.png";
+import githubImg from "../../../shared/assets/authLogin/github.png";
 
-export const LoginForm = () => {
+type LoginFormProps = {
+  onLoginSubmit: (data: { username: string; password: string }) => void;
+};
+
+export const LoginForm = ({ onLoginSubmit }: LoginFormProps) => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useAuthModel();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    login({ username, password });
+    onLoginSubmit({ username, password });
   };
 
   return (
