@@ -14,6 +14,15 @@ const theme = {
     medium: "1rem",
     large: "1.5rem",
   },
+  spacing: {
+    small: "8px",
+    medium: "16px",
+    large: "24px",
+  },
+  breakpoints: {
+    mobile: "768px",
+    tablet: "1024px",
+  },
 };
 
 export default theme;
