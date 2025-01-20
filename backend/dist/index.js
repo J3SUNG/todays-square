@@ -4,16 +4,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const routes_1 = __importDefault(require("./routes")); // routes/index.ts를 가져오기
+const routes_1 = __importDefault(require("./routes"));
+const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
+app.use((0, cors_1.default)({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+}));
 app.use(express_1.default.json());
-// API 라우트 연결
 app.use("/api", routes_1.default);
-// 기본 라우트
 app.get("/", (req, res) => {
     res.send("Hello, world!");
 });
-// 서버 실행
+app.post("/login", (req, res) => {
+    console.log(req.body, "REQ");
+    const { email, password } = req.body;
+    if (email === "1234@co.kr" && password === "1234") {
+        res.send({ message: "로그인 성공" });
+    }
+    else {
+        res.status(401).send({ message: "로그인 실패" });
+    }
+});
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
