@@ -17,16 +17,16 @@ import kakaoImg from "../../../shared/assets/authLogin/kakao.png";
 import githubImg from "../../../shared/assets/authLogin/github.png";
 
 type LoginFormProps = {
-  onLoginSubmit: (data: { username: string; password: string }) => void;
+  onLoginSubmit: (data: { email: string; password: string }) => void;
 };
 
 export const LoginForm = ({ onLoginSubmit }: LoginFormProps) => {
-  const [username, setUserName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onLoginSubmit({ username, password });
+    onLoginSubmit({ email, password });
   };
 
   return (
@@ -38,7 +38,7 @@ export const LoginForm = ({ onLoginSubmit }: LoginFormProps) => {
           id="email"
           type="email"
           placeholder="이메일"
-          onChange={(e) => setUserName(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
         />
       </LoginFormInputGroup>
       <LoginFormInputGroup>
