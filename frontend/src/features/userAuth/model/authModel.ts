@@ -9,12 +9,13 @@ interface AuthState {
 
 export const useAuthModel = create<AuthState>((set) => ({
   isLoggedIn: false,
-  login: async (data) => {
-    try {
-      await authService.login(data);
-      set({ isLoggedIn: true });
-    } catch (error) {
-      console.error("Login failed:", error);
+  login: async (data: LoginRequest) => {
+    const response = await authService.login(data);
+
+    if (!response.success) {
+      throw new Error(response.message || "로그인에 실패했습니다.");
     }
+
+    set({ isLoggedIn: true });
   },
 }));

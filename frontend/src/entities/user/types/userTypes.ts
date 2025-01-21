@@ -5,5 +5,6 @@ export type LoginRequest = {
 
 export type LoginResponse = {
   success: boolean;
-  token: string;
+  token?: string;
+  message?: string;
 };
