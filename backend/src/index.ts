@@ -24,9 +24,9 @@ app.post("/login", (req, res) => {
   console.log(req.body, "REQ");
   const { email, password } = req.body;
   if (email === "1234@co.kr" && password === "1234") {
-    res.send({ message: "로그인 성공" });
+    res.send({ success: true, message: "로그인 성공" });
   } else {
-    res.status(401).send({ message: "로그인 실패" });
+    res.status(401).send({ success: false, message: "로그인 실패" });
   }
 });
 
