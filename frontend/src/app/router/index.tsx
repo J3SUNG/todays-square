@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Home, Login } from "../../pages";
 import { Navigate } from "react-router-dom";
+import { HomePage, LoginPage } from "../../pages";
 
 type PrivateRouteProps = {
   isAuthenticated: boolean;
@@ -17,7 +17,7 @@ export const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<HomePage />} />
         <Route
           path="/protected"
           element={
@@ -26,7 +26,7 @@ export const AppRouter = () => {
             </PrivateRoute>
           }
         />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
     </BrowserRouter>
   );
