@@ -3,6 +3,7 @@ import { AppProviders } from "./providers/AppProviders";
 import { Navbar } from "../widgets/Navbar";
 import Layout from "./Layout/Layout";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
