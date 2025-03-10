@@ -1,32 +1,26 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { HomePage, LoginPage } from "../../pages";
+import { useAuthStore } from "../../features/auth";
 
-type PrivateRouteProps = {
-  isAuthenticated: boolean;
-  children: React.ReactNode;
-};
-
-const PrivateRoute = ({ isAuthenticated, children }: PrivateRouteProps) => {
-  return isAuthenticated ? <>{children}</> : <Navigate to="/login" />;
+const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+  return isLoggedIn ? <>{children}</> : <Navigate to="/login" />;
 };
 
 export const AppRouter = () => {
-  const isAuthenticated = true;
-
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/" element={<HomePage />} />
         <Route
-          path="/protected"
+          path="/dashboard"
           element={
-            <PrivateRoute isAuthenticated={isAuthenticated}>
-              <></>
+            <PrivateRoute>
+              <div>Dashboard Page</div>
             </PrivateRoute>
           }
         />
-        <Route path="/login" element={<LoginPage />} />
       </Routes>
     </BrowserRouter>
   );
