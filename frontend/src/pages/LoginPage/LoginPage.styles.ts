@@ -1,8 +1,7 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
 export const LoginContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 20px;
 `;
