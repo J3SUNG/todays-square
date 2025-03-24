@@ -1,28 +1,103 @@
-# Frontend - 오늘의 네모
+# 오늘의 광장 (Today's Square)
+
+이 프로젝트는 Feature-Sliced Design(FSD) 아키텍처, SOLID 원칙, 객체지향 프로그래밍(OOP)을 기반으로 구현된 게시판 웹 애플리케이션입니다.
 
 ## 기술 스택
 
-- **Vite**: ^6.0.3
-- **React**: ^18.3.1
-- **TypeScript**: ~5.6.2
-- **Emotion**: ^11.14.0
-- **플러그인**: @vitejs/plugin-react-swc
+- **프레임워크**: React
+- **언어**: TypeScript
+- **상태 관리**: Zustand
+- **스타일링**: Emotion
+- **HTTP 클라이언트**: Axios
+- **라우팅**: React Router v7
 
-## 초기화 명령어
+## 아키텍처
 
-```bash
-npm create vite@latest my-app --template react-ts
-npm install @emotion/react @emotion/styled
+이 프로젝트는 Feature-Sliced Design(FSD) 아키텍처를 적용하여 구현되었습니다.
+
+### 레이어 구조
+
+- **app**: 애플리케이션 초기화, 글로벌 프로바이더, 라우터 등 애플리케이션 전체에 영향을 미치는 요소들을 포함
+- **pages**: 라우트에 연결된 페이지 컴포넌트들을 포함
+- **widgets**: 비즈니스 엔티티와 관련된 복합적인 UI 블록 (예: PostList, PostDetail, CommentList)
+- **features**: 사용자 액션, 비즈니스 로직을 담당하는 기능 (예: auth, post, comment)
+- **entities**: 비즈니스 엔티티와 관련된 로직 (예: User, Post, Comment)
+- **shared**: 공통 UI 컴포넌트, 유틸리티 함수, 설정 등 재사용 가능한 독립적인 모듈
+
+## SOLID 원칙 적용
+
+이 프로젝트는 다음과 같은 SOLID 원칙을 적용하여 설계되었습니다:
+
+1. **단일 책임 원칙(SRP)**: 각 클래스와 컴포넌트는 하나의 책임만 가짐
+2. **개방-폐쇄 원칙(OCP)**: 확장에는 열려있고 수정에는 닫혀있는 컴포넌트 설계 (예: Button 컴포넌트)
+3. **리스코프 치환 원칙(LSP)**: 상위 타입의 객체를 하위 타입의 객체로 대체할 수 있도록 설계
+4. **인터페이스 분리 원칙(ISP)**: 클라이언트는 자신이 사용하지 않는 메서드에 의존하지 않음
+5. **의존성 역전 원칙(DIP)**: 상위 모듈은 하위 모듈에 의존하지 않고, 둘 다 추상화에 의존
+
+## OOP 적용
+
+객체지향 프로그래밍 원칙을 활용하여 다음과 같이 구현했습니다:
+
+1. **캡슐화**: 상태와 그 상태를 조작하는 함수를 하나의 객체로 묶음
+2. **추상화**: 인터페이스를 통해 내부 구현 세부사항 숨김
+3. **상속**: 여러 UI 컴포넌트에서 기본 스타일과 기능을 상속
+4. **다형성**: 인터페이스를 통해 다양한 구현체를 사용할 수 있게 함
+
+## 주요 기능
+
+1. **인증**: 로그인/로그아웃 기능
+2. **게시판**: 게시물 목록, 상세 조회, 작성, 수정, 삭제 기능
+3. **댓글**: 댓글 작성, 수정, 삭제, 답글 기능
+4. **좋아요**: 게시물 및 댓글 좋아요 기능
+
+## 실행 방법
+
+1. 패키지 설치:
+   ```bash
+   npm install
+   ```
+
+2. 개발 서버 실행:
+   ```bash
+   npm run dev
+   ```
+
+3. 빌드:
+   ```bash
+   npm run build
+   ```
+
+## 프로젝트 구조
+
 ```
-
-## 폴더 구조 (FSD 아키텍쳐)
-
-📦 frontend  
-┣ 📂 src  
-┃ ┣ 📂 app # 앱 전체 설정 (라우팅, 진입점, 전역 스타일, 프로바이더)  
-┃ ┣ 📂 pages # 전체 페이지 또는 중첩 라우팅에서 페이지의 주요 부분  
-┃ ┣ 📂 widgets # 독립적으로 작동하는 대규모 기능 또는 UI 컴포넌트  
-┃ ┣ 📂 features # 제품 전반에 걸쳐 재사용되는 기능 구현체  
-┃ ┣ 📂 entities # 비즈니스 엔티티 (예: user 또는 product)  
-┃ ┣ 📂 shared # 프로젝트 전반에서 재사용 가능한 공통 코드  
-┃ ┗ 📜 index.tsx # React 애플리케이션의 진입점
+frontend/
+├── src/
+│   ├── app/              # 애플리케이션 초기화 및 설정
+│   │   ├── providers/    # 전역 프로바이더
+│   │   ├── router/       # 라우팅 설정
+│   │   ├── styles/       # 전역 스타일
+│   │   └── Layout/       # 앱 레이아웃
+│   ├── pages/            # 페이지 컴포넌트
+│   │   ├── Home/
+│   │   ├── LoginPage/
+│   │   ├── PostPage/
+│   │   └── CreatePostPage/
+│   ├── widgets/          # 복합 UI 블록
+│   │   ├── Navbar/
+│   │   ├── PostList/
+│   │   ├── PostDetail/
+│   │   └── CommentList/
+│   ├── features/         # 기능 구현
+│   │   ├── auth/
+│   │   ├── post/
+│   │   └── comment/
+│   ├── entities/         # 비즈니스 엔티티
+│   │   ├── user/
+│   │   ├── post/
+│   │   └── comment/
+│   └── shared/           # 공통 모듈
+│       ├── api/          # API 클라이언트
+│       ├── ui/           # UI 컴포넌트
+│       ├── lib/          # 유틸리티 함수
+│       └── config/       # 설정
+```

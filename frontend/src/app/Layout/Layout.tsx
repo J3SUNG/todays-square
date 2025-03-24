@@ -1,14 +1,22 @@
-import { LayoutWrapper, Content } from "./Layout.styles";
+import React, { ReactNode } from 'react';
+import styled from '@emotion/styled';
+import { Global } from '@emotion/react';
+import { globalStyles } from '../styles/globalStyles';
 
-type LayoutProps = {
-  children: React.ReactNode;
-};
+interface LayoutProps {
+  children: ReactNode;
+}
 
-export const Layout = ({ children }: LayoutProps) => {
+const Main = styled.main`
+  min-height: calc(100vh - 60px); // 네비게이션 바 높이 고려
+`;
+
+const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <LayoutWrapper>
-      <Content>{children}</Content>
-    </LayoutWrapper>
+    <>
+      <Global styles={globalStyles} />
+      <Main>{children}</Main>
+    </>
   );
 };
 
