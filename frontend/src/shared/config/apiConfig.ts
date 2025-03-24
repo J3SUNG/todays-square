@@ -1,6 +1,4 @@
-// API 설정
-export const API_BASE_URL = process.env.VITE_API_URL || 'http://localhost:3000/api';
-
+// API 엔드포인트 설정
 export const API_ENDPOINTS = {
   AUTH: {
     LOGIN: '/auth/login',
@@ -10,11 +8,13 @@ export const API_ENDPOINTS = {
   },
   POSTS: {
     BASE: '/posts',
-    GET_BY_ID: (id: string) => `/posts/${id}`,
+    DETAIL: (id: string) => `/posts/${id}`,
     COMMENTS: (postId: string) => `/posts/${postId}/comments`,
+    LIKE: (id: string) => `/posts/${id}/like`,
   },
   COMMENTS: {
     BASE: '/comments',
-    GET_BY_ID: (id: string) => `/comments/${id}`,
+    DETAIL: (id: string) => `/comments/${id}`,
+    LIKE: (id: string) => `/comments/${id}/like`,
   },
 };
