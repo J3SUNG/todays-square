@@ -1,32 +1,70 @@
-import { useAuthStore } from "../";
-import { authService } from "../";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuthStore } from './authStore';
+import { authService } from '../service/authService';
+import { toast } from 'react-toastify';
+import { getErrorMessage } from '../../../shared/lib/helpers';
+
+interface LoginCredentials {
+  email: string;
+  password: string;
+}
 
 export const useLoginHandler = () => {
-  const setLoggedIn = useAuthStore((state) => state.setLoggedIn);
-  const setToken = useAuthStore((state) => state.setToken);
-  const setUser = useAuthStore((state) => state.setUser);
   const navigate = useNavigate();
-
-  return async (data: { email: string; password: string }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const { setLoggedIn, setToken, setUser } = useAuthStore();
+  
+  const handleLogin = async (credentials: LoginCredentials) => {
+    setIsLoading(true);
+    setError(null);
+    
     try {
-      const response = await authService.login(data);
-      if (response.success) {
-        setLoggedIn(true);
-        setToken(response.token || null);
-        setUser(response.user || null);
-        toast.success("로그인에 성공했습니다!");
-        navigate("/dashboard");
-      } else {
-        toast.error(response.message || "로그인에 실패했습니다.");
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        toast.error(error.message);
-      } else {
-        toast.error("알 수 없는 오류가 발생했습니다.");
-      }
+      const { token, user } = await authService.login(credentials);
+      
+      // 토큰을 로컬 스토리지에 저장
+      localStorage.setItem('token', token);
+      
+      // 인증 상태 업데이트
+      setToken(token);
+      setUser(user);
+      setLoggedIn(true);
+      
+      toast.success('로그인되었습니다.');
+      navigate('/');
+    } catch (err) {
+      const errorMessage = getErrorMessage(err);
+      setError(errorMessage);
+      toast.error(errorMessage);
+    } finally {
+      setIsLoading(false);
     }
   };
+  
+  return { handleLogin, isLoading, error };
+};
+
+export const useLogoutHandler = () => {
+  const navigate = useNavigate();
+  const { logout } = useAuthStore();
+  
+  const handleLogout = async () => {
+    try {
+      await authService.logout();
+      
+      // 로컬 스토리지에서 토큰 제거
+      localStorage.removeItem('token');
+      
+      // 인증 상태 초기화
+      logout();
+      
+      toast.success('로그아웃되었습니다.');
+      navigate('/login');
+    } catch (err) {
+      toast.error(getErrorMessage(err));
+    }
+  };
+  
+  return handleLogout;
 };

@@ -1,41 +1,33 @@
-import { LoginRequest, LoginResponse } from "../../../entities/user";
-import { axiosInstance } from "../../../shared";
-import axios from "axios";
+import { httpClient } from '../../../shared/lib/http';
+import { API_ENDPOINTS } from '../../../shared/config/apiConfig';
+import { User } from '../../../entities/user';
 
-export const authService = {
-  login: async (data: LoginRequest): Promise<LoginResponse> => {
-    try {
-      const response = await axiosInstance.post<LoginResponse>("/auth/login", data);
-      if (response.data.token) {
-        localStorage.setItem("token", response.data.token);
-      }
-      return response.data;
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        throw new Error(error.response?.data?.message || "로그인에 실패했습니다.");
-      }
-      throw error;
-    }
-  },
+// 인증 서비스 인터페이스
+interface IAuthService {
+  login(credentials: { email: string; password: string }): Promise<{ token: string; user: User }>;
+  register(userData: { email: string; password: string; name: string }): Promise<{ token: string; user: User }>;
+  logout(): Promise<void>;
+  getCurrentUser(): Promise<User>;
+}
 
-  socialLogin: async (
-    provider: "google" | "kakao" | "github" | "naver"
-  ): Promise<LoginResponse> => {
-    try {
-      const response = await axiosInstance.get<LoginResponse>(`/auth/${provider}`);
-      if (response.data.token) {
-        localStorage.setItem("token", response.data.token);
-      }
-      return response.data;
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        throw new Error(error.response?.data?.message || "소셜 로그인에 실패했습니다.");
-      }
-      throw error;
-    }
-  },
+// 구체적인 서비스 구현
+class AuthService implements IAuthService {
+  async login(credentials: { email: string; password: string }): Promise<{ token: string; user: User }> {
+    return httpClient.post(API_ENDPOINTS.AUTH.LOGIN, credentials);
+  }
+  
+  async register(userData: { email: string; password: string; name: string }): Promise<{ token: string; user: User }> {
+    return httpClient.post(API_ENDPOINTS.AUTH.REGISTER, userData);
+  }
+  
+  async logout(): Promise<void> {
+    return httpClient.post(API_ENDPOINTS.AUTH.LOGOUT);
+  }
+  
+  async getCurrentUser(): Promise<User> {
+    return httpClient.get(API_ENDPOINTS.AUTH.ME);
+  }
+}
 
-  logout: () => {
-    localStorage.removeItem("token");
-  },
-};
+// 싱글톤 인스턴스 생성
+export const authService = new AuthService();
