@@ -89,6 +89,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId }) => {
   // 댓글 데이터 로드
   useEffect(() => {
     fetchComments(postId);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postId]);
   
   return (

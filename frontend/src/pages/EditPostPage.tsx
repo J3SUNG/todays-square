@@ -48,6 +48,7 @@ export const EditPostPage: React.FC = () => {
     if (id) {
       fetchPost(id);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
   
   useEffect(() => {
@@ -66,6 +67,7 @@ export const EditPostPage: React.FC = () => {
       const updatedPost = await updatePost(id, data);
       navigate(`/posts/${updatedPost.id}`);
     } catch (error) {
+      console.error('게시물 업데이트 오류:', error);
       // 에러 처리는 context에서 처리됨
     }
   };

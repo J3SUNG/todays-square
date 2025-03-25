@@ -54,6 +54,16 @@ type PostsActions = {
 // Context 타입 정의
 type PostsContextType = PostsState & PostsActions;
 
+// API 에러 타입 정의
+interface ApiError {
+  response?: {
+    data?: {
+      message?: string;
+    };
+  };
+  message?: string;
+}
+
 // Context 생성
 const PostsContext = createContext<PostsContextType | undefined>(undefined);
 
@@ -80,6 +90,11 @@ export const PostsProvider: React.FC<PostsProviderProps> = ({ children }) => {
     totalPosts: 0,
     filter: initialFilter,
   });
+
+  // 에러 메시지 추출 헬퍼 함수
+  const getErrorMessage = (error: ApiError): string => {
+    return error.response?.data?.message || error.message || '알 수 없는 오류가 발생했습니다.';
+  };
 
   // 게시물 목록 조회
   const fetchPosts = async (newFilter?: Partial<PostFilter>) => {
@@ -110,8 +125,8 @@ export const PostsProvider: React.FC<PostsProviderProps> = ({ children }) => {
         isLoading: false,
         filter: updatedFilter,
       }));
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || '게시물을 불러오는데 실패했습니다.';
+    } catch (error) {
+      const errorMessage = getErrorMessage(error as ApiError);
       setState(prev => ({ 
         ...prev, 
         isLoading: false, 
@@ -133,8 +148,8 @@ export const PostsProvider: React.FC<PostsProviderProps> = ({ children }) => {
         isLoading: false,
       }));
       return post;
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || '게시물을 불러오는데 실패했습니다.';
+    } catch (error) {
+      const errorMessage = getErrorMessage(error as ApiError);
       setState(prev => ({ 
         ...prev, 
         isLoading: false, 
@@ -170,8 +185,8 @@ export const PostsProvider: React.FC<PostsProviderProps> = ({ children }) => {
       
       toast.success('게시물이 작성되었습니다.');
       return post;
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || '게시물 작성에 실패했습니다.';
+    } catch (error) {
+      const errorMessage = getErrorMessage(error as ApiError);
       setState(prev => ({ 
         ...prev, 
         isLoading: false, 
@@ -199,8 +214,8 @@ export const PostsProvider: React.FC<PostsProviderProps> = ({ children }) => {
       
       toast.success('게시물이 수정되었습니다.');
       return post;
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || '게시물 수정에 실패했습니다.';
+    } catch (error) {
+      const errorMessage = getErrorMessage(error as ApiError);
       setState(prev => ({ 
         ...prev, 
         isLoading: false, 
@@ -229,8 +244,8 @@ export const PostsProvider: React.FC<PostsProviderProps> = ({ children }) => {
       
       toast.success('게시물이 삭제되었습니다.');
       return true;
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || '게시물 삭제에 실패했습니다.';
+    } catch (error) {
+      const errorMessage = getErrorMessage(error as ApiError);
       setState(prev => ({ 
         ...prev, 
         isLoading: false, 
@@ -256,8 +271,8 @@ export const PostsProvider: React.FC<PostsProviderProps> = ({ children }) => {
       }));
       
       return likes;
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || '좋아요에 실패했습니다.';
+    } catch (error) {
+      const errorMessage = getErrorMessage(error as ApiError);
       toast.error(errorMessage);
       throw error;
     }
@@ -274,6 +289,7 @@ export const PostsProvider: React.FC<PostsProviderProps> = ({ children }) => {
   // 필터 변경 시 자동으로 게시물 목록 갱신
   useEffect(() => {
     fetchPosts();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.filter.page, state.filter.sortBy]);
 
   // Context 값

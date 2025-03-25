@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
-import { PostList, usePosts } from '../features/posts';
 import { useAuth } from '../features/auth';
 
 // 스타일 컴포넌트
@@ -44,51 +43,42 @@ const Button = styled.button`
   }
 `;
 
-const Section = styled.section`
-  margin-bottom: 40px;
+const GameContainer = styled.div`
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  text-align: center;
 `;
 
-const SectionTitle = styled.h2`
+const GameHeading = styled.h2`
   font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   color: #333;
 `;
 
+const GameDescription = styled.p`
+  margin-bottom: 24px;
+  color: #666;
+`;
+
 export const HomePage: React.FC = () => {
-  const { setFilter } = usePosts();
   const { isLoggedIn } = useAuth();
-  
-  // 홈페이지에서는 최신 게시물 5개만 표시
-  useEffect(() => {
-    setFilter({
-      page: 1,
-      limit: 5,
-      sortBy: 'latest',
-    });
-    
-    // 컴포넌트 언마운트 시 필터 초기화
-    return () => {
-      setFilter({
-        page: 1,
-        limit: 10,
-        sortBy: 'latest',
-      });
-    };
-  }, []);
   
   return (
     <Container>
       <HeroSection>
-        <Title>오늘의 광장에 오신 것을 환영합니다</Title>
+        <Title>오늘의 네모</Title>
         <SubTitle>
-          다양한 주제에 대해 이야기하고, 지식을 공유하고, 새로운 사람들과 소통하세요.
-          오늘의 광장은 여러분의 생각과 경험이 모이는 공간입니다.
+          매일 새로운 노노그램 퍼즐을 풀어보세요. 논리적 사고와 집중력을 키울 수 있는 
+          재미있는 퍼즐 게임을 하루에 한 번 제공합니다.
         </SubTitle>
         
         {isLoggedIn ? (
-          <Link to="/posts/create">
-            <Button>글 작성하기</Button>
+          <Link to="/game">
+            <Button>오늘의 퍼즐 풀기</Button>
           </Link>
         ) : (
           <Link to="/login">
@@ -97,10 +87,19 @@ export const HomePage: React.FC = () => {
         )}
       </HeroSection>
       
-      <Section>
-        <SectionTitle>최신 게시물</SectionTitle>
-        <PostList />
-      </Section>
+      <GameContainer>
+        <GameHeading>오늘의 네모란?</GameHeading>
+        <GameDescription>
+          노노그램(네모로직)은 숫자 힌트를 사용해 그림을 완성하는 퍼즐 게임입니다.
+          매일 새로운 퍼즐이 제공되며, 퍼즐을 풀면 귀여운 픽셀 아트를 발견할 수 있습니다.
+          회원가입 후 매일 퍼즐을 풀고 랭킹에 도전해보세요!
+        </GameDescription>
+        <img 
+          src="/sample-nonogram.png" 
+          alt="노노그램 예시" 
+          style={{ maxWidth: '100%', borderRadius: '4px', marginBottom: '16px' }}
+        />
+      </GameContainer>
     </Container>
   );
 };

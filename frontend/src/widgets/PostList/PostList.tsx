@@ -70,7 +70,7 @@ export const PostList: React.FC<PostListProps> = ({ authorId }) => {
   
   useEffect(() => {
     loadPosts({ authorId });
-  }, [filters.page, filters.sortBy, authorId]);
+  }, [filters.page, filters.sortBy, authorId, loadPosts, filters.limit]);
   
   const handleSortChange = (sortBy: PostSortOption) => {
     setFilters({ sortBy, page: 1 });

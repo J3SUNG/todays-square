@@ -115,7 +115,7 @@ export const PostForm: React.FC<PostFormProps> = ({
     try {
       await onSubmit(formData);
       // 제출 성공 후 폼 초기화는 부모 컴포넌트에서 처리
-    } catch (error) {
+    } catch {
       // 에러는 부모 컴포넌트에서 처리
     }
   };

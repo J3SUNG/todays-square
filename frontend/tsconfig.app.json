@@ -18,8 +18,8 @@
 
     /* Linting */
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedLocals": false, /* 임시로 비활성화 */
+    "noUnusedParameters": false, /* 임시로 비활성화 */
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src"]

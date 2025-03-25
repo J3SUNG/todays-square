@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
-import styled from '@emotion/styled';
-import { useCommentsStore } from '../../entities/comment';
-import { useCommentsLoader, useCreateCommentHandler, CommentForm } from '../../features/comment';
-import { CommentItem } from './CommentItem';
-import { Card } from '../../shared/ui';
-import { useAuthStore } from '../../features/auth';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from "react";
+import styled from "@emotion/styled";
+import { useCommentsStore } from "../../entities/comment";
+import { useCommentsLoader, useCreateCommentHandler, CommentForm } from "../../features/comment";
+import { CommentItem } from "./CommentItem";
+import { Card } from "../../shared/ui";
+import { useAuthStore } from "../../features/auth";
+import { useNavigate } from "react-router-dom";
 
 interface CommentListProps {
   postId: string;
@@ -48,47 +48,45 @@ export const CommentList: React.FC<CommentListProps> = ({ postId }) => {
   const loadComments = useCommentsLoader();
   const { createComment, isSubmitting } = useCreateCommentHandler();
   const { isLoggedIn } = useAuthStore();
-  
+
   useEffect(() => {
     loadComments(postId);
-  }, [postId]);
-  
+  }, [postId, loadComments]);
+
   const handleCommentSubmit = async (content: string) => {
     if (!isLoggedIn) {
-      navigate('/login');
+      navigate("/login");
       return;
     }
-    
+
     await createComment({
       content,
-      postId
+      postId,
     });
   };
-  
+
   if (error) {
     return (
       <ListContainer>
         <Card>
-          <EmptyMessage>
-            댓글을 불러오는 중 오류가 발생했습니다: {error}
-          </EmptyMessage>
+          <EmptyMessage>댓글을 불러오는 중 오류가 발생했습니다: {error}</EmptyMessage>
         </Card>
       </ListContainer>
     );
   }
-  
+
   // 최상위 댓글만 필터링 (답글은 별도로 표시)
-  const rootComments = comments.filter(comment => !comment.parentId);
-  
+  const rootComments = comments.filter((comment) => !comment.parentId);
+
   return (
     <ListContainer>
       <Card>
         <CommentHeader>
           <CommentCount>댓글 {comments.length}개</CommentCount>
         </CommentHeader>
-        
+
         {isLoggedIn && (
-          <div style={{ padding: '16px' }}>
+          <div style={{ padding: "16px" }}>
             <CommentForm
               postId={postId}
               onSubmit={handleCommentSubmit}
@@ -96,7 +94,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId }) => {
             />
           </div>
         )}
-        
+
         {loading ? (
           <LoadingMessage>댓글을 불러오는 중...</LoadingMessage>
         ) : comments.length === 0 ? (

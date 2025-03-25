@@ -140,6 +140,12 @@ const LoadingSpinner = styled.div`
   }
 `;
 
+const ErrorDisplay = styled.div`
+  text-align: center;
+  padding: 40px 0;
+  color: #dc3545;
+`;
+
 // Props 타입 정의
 type PostDetailProps = {
   postId: string;
@@ -155,6 +161,7 @@ export const PostDetail: React.FC<PostDetailProps> = ({ postId }) => {
   // 게시물 데이터 로드
   useEffect(() => {
     fetchPost(postId);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postId]);
   
   // 게시물 삭제 핸들러
@@ -182,7 +189,7 @@ export const PostDetail: React.FC<PostDetailProps> = ({ postId }) => {
     try {
       await likePost(postId);
       setIsLiked(!isLiked);
-    } catch (error) {
+    } catch {
       // 에러 처리는 context에서 처리됨
     }
   };
@@ -198,9 +205,9 @@ export const PostDetail: React.FC<PostDetailProps> = ({ postId }) => {
   if (error || !currentPost) {
     return (
       <DetailContainer>
-        <div style={{ textAlign: 'center', padding: '40px 0' }}>
+        <ErrorDisplay>
           {error || '게시물을 찾을 수 없습니다.'}
-        </div>
+        </ErrorDisplay>
       </DetailContainer>
     );
   }

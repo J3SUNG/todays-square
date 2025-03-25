@@ -98,6 +98,8 @@ export const CommentForm: React.FC<CommentFormProps> = ({
         setContent('');
       }
     } catch (error) {
+      console.error('댓글 작성/수정 오류:', error);
+    
       // 에러 처리는 context에서 처리됨
     } finally {
       setIsSubmitting(false);

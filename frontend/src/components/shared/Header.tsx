@@ -83,10 +83,16 @@ export const Header: React.FC = () => {
     <HeaderContainer>
       <HeaderContent>
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Logo to="/">오늘의 광장</Logo>
+          <Logo to="/">오늘의 네모</Logo>
           <NavLinks>
             <NavLink to="/">홈</NavLink>
-            <NavLink to="/posts">게시판</NavLink>
+            {isLoggedIn && (
+              <>
+                <NavLink to="/game">게임</NavLink>
+                <NavLink to="/history">기록</NavLink>
+                <NavLink to="/ranking">랭킹</NavLink>
+              </>
+            )}
           </NavLinks>
         </div>
         
@@ -94,8 +100,8 @@ export const Header: React.FC = () => {
           {isLoggedIn ? (
             <>
               <UserName>{user?.name}님</UserName>
-              <Link to="/posts/create">
-                <Button color="primary">글쓰기</Button>
+              <Link to="/game">
+                <Button color="primary">오늘의 퍼즐</Button>
               </Link>
               <Button onClick={handleLogout} style={{ marginLeft: '8px' }}>
                 로그아웃

@@ -1,4 +1,3 @@
-// 전역 테마 설정
 export const theme = {
   colors: {
     primary: '#4a6cf7',
@@ -75,6 +74,9 @@ export const theme = {
     slow: '0.5s'
   }
 };
+
+// 기본 내보내기 추가
+export default theme;
 
 // Emotion 타입 정의
 declare module '@emotion/react' {

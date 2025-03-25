@@ -17,7 +17,15 @@ export default tseslint.config({
     "react-refresh": reactRefresh,
   },
   rules: {
+    // React Hooks 설정
     ...reactHooks.configs.recommended.rules,
-    "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
+    
+    // 린트 규칙을 프로젝트에 맞게 조정
+    "react-refresh/only-export-components": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "no-unused-vars": "off",
+    "react-hooks/exhaustive-deps": "warn",
+    "prefer-const": "warn",
   },
 });

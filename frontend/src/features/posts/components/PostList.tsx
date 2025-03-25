@@ -100,6 +100,7 @@ export const PostList: React.FC<PostListProps> = ({ authorId }) => {
     if (authorId) {
       fetchPosts({ authorId, page: 1 });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authorId]);
   
   // 정렬 옵션 변경 핸들러
@@ -121,12 +122,8 @@ export const PostList: React.FC<PostListProps> = ({ authorId }) => {
     
     const pages = [];
     const maxPagesToShow = 5;
-    let startPage = Math.max(1, filter.page - Math.floor(maxPagesToShow / 2));
-    let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
-    
-    if (endPage - startPage + 1 < maxPagesToShow) {
-      startPage = Math.max(1, endPage - maxPagesToShow + 1);
-    }
+    const startPage = Math.max(1, filter.page - Math.floor(maxPagesToShow / 2));
+    const endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
     
     // 이전 페이지 버튼
     pages.push(

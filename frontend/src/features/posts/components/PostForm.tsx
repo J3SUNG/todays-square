@@ -2,17 +2,15 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { PostFormData } from '../context/PostsContext';
 
-// 폼 컨테이너 스타일
+// 스타일 컴포넌트
 const FormContainer = styled.form`
   width: 100%;
 `;
 
-// 폼 그룹 스타일
 const FormGroup = styled.div`
   margin-bottom: 20px;
 `;
 
-// 라벨 스타일
 const Label = styled.label`
   display: block;
   margin-bottom: 8px;
@@ -20,7 +18,6 @@ const Label = styled.label`
   color: #333;
 `;
 
-// 인풋 스타일
 const Input = styled.input`
   width: 100%;
   padding: 10px 12px;
@@ -35,7 +32,6 @@ const Input = styled.input`
   }
 `;
 
-// 텍스트 에어리어 스타일
 const TextArea = styled.textarea`
   width: 100%;
   padding: 10px 12px;
@@ -52,14 +48,12 @@ const TextArea = styled.textarea`
   }
 `;
 
-// 에러 메시지 스타일
 const ErrorMessage = styled.div`
   color: #dc3545;
   font-size: 13px;
   margin-top: 5px;
 `;
 
-// 버튼 컨테이너 스타일
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -67,7 +61,6 @@ const ButtonContainer = styled.div`
   margin-top: 20px;
 `;
 
-// 버튼 스타일
 const Button = styled.button<{ variant?: 'primary' | 'secondary' }>`
   padding: 10px 16px;
   border: none;
@@ -163,8 +156,8 @@ export const PostForm: React.FC<PostFormProps> = ({
     
     try {
       await onSubmit(formData);
-    } catch (error) {
-      // 오류 처리는 onSubmit에서 수행
+    } catch {
+      // 오류 처리는 상위 컴포넌트에서 수행
     }
   };
   

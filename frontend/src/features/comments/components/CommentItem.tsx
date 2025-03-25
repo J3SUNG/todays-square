@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { Comment, useComments } from '../context/CommentsContext';
-import { useAuth } from '../../auth';
+import { useAuthStore } from '../../auth';
 import { CommentForm } from './CommentForm';
 
 // 날짜 포맷 함수
@@ -122,7 +122,7 @@ type CommentItemProps = {
 };
 
 export const CommentItem: React.FC<CommentItemProps> = ({ comment, postId }) => {
-  const { user } = useAuth();
+  const { user } = useAuthStore();
   const { deleteComment, likeComment } = useComments();
   const [isEditing, setIsEditing] = useState(false);
   const [showReplyForm, setShowReplyForm] = useState(false);
@@ -148,6 +148,7 @@ export const CommentItem: React.FC<CommentItemProps> = ({ comment, postId }) => 
       await likeComment(comment.id);
       setIsLiked(!isLiked);
     } catch (error) {
+      console.error('댓글 좋아요 처리 오류:', error);
       // 에러 처리는 context에서 처리됨
     }
   };

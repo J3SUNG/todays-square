@@ -31,7 +31,7 @@ export const HomePage: React.FC = () => {
         limit: 10
       });
     };
-  }, []);
+  }, [setFilters]); // setFilters를 종속성 배열에 추가
   
   return (
     <HomeContainer>

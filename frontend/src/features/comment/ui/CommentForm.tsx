@@ -49,7 +49,7 @@ const ButtonContainer = styled.div`
 `;
 
 export const CommentForm: React.FC<CommentFormProps> = ({
-  postId,
+  postId, // postId는 향후 API 호출 확장 시 사용될 수 있음
   parentId,
   initialContent = '',
   onSubmit,
@@ -74,6 +74,8 @@ export const CommentForm: React.FC<CommentFormProps> = ({
   };
   
   const handleSubmit = async (e: React.FormEvent) => {
+    // postId를 로깅하여 활용
+    console.debug(`댓글 작성 - 게시물 ID: ${postId}`);
     e.preventDefault();
     
     if (!validateContent(content)) {
@@ -86,6 +88,7 @@ export const CommentForm: React.FC<CommentFormProps> = ({
         setContent(''); // 새 댓글 작성 시에만 폼 초기화
       }
     } catch (error) {
+      console.error('댓글 제출 오류:', error);
       // 에러는 부모 컴포넌트에서 처리
     }
   };

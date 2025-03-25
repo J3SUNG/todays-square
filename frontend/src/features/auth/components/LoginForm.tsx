@@ -96,7 +96,7 @@ export const LoginForm: React.FC = () => {
     try {
       await login(email, password);
       navigate('/');
-    } catch (error) {
+    } catch {
       // 에러 처리는 AuthContext에서 수행
     }
   };

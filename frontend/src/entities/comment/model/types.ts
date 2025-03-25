@@ -5,6 +5,7 @@ export interface Comment {
   authorId: string;
   authorName: string;
   postId: string;
+  parentId?: string;
   createdAt: string;
   updatedAt: string;
   likes: number;

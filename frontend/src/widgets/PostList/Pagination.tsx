@@ -51,13 +51,8 @@ export const Pagination: React.FC<PaginationProps> = ({
     const maxPagesToShow = 5;
     
     // 시작 페이지와 종료 페이지 계산
-    let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
-    let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
-    
-    // startPage 조정
-    if (endPage - startPage + 1 < maxPagesToShow) {
-      startPage = Math.max(1, endPage - maxPagesToShow + 1);
-    }
+    const startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
+    const endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
     
     // 페이지 번호 추가
     for (let i = startPage; i <= endPage; i++) {

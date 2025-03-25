@@ -43,6 +43,16 @@ type CommentsActions = {
 // Context 타입 정의
 type CommentsContextType = CommentsState & CommentsActions;
 
+// API 에러 타입 정의
+interface ApiError {
+  response?: {
+    data?: {
+      message?: string;
+    };
+  };
+  message?: string;
+}
+
 // Context 생성
 const CommentsContext = createContext<CommentsContextType | undefined>(undefined);
 
@@ -59,6 +69,11 @@ export const CommentsProvider: React.FC<CommentsProviderProps> = ({ children }) 
     isLoading: false,
     error: null,
   });
+
+  // 에러 메시지 추출 헬퍼 함수
+  const getErrorMessage = (error: ApiError): string => {
+    return error.response?.data?.message || error.message || '알 수 없는 오류가 발생했습니다.';
+  };
 
   // 댓글 목록 조회
   const fetchComments = async (postId: string) => {
@@ -100,8 +115,8 @@ export const CommentsProvider: React.FC<CommentsProviderProps> = ({ children }) 
         isLoading: false,
         error: null,
       });
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || '댓글을 불러오는데 실패했습니다.';
+    } catch (error) {
+      const errorMessage = getErrorMessage(error as ApiError);
       setState(prev => ({ 
         ...prev, 
         isLoading: false, 
@@ -147,8 +162,8 @@ export const CommentsProvider: React.FC<CommentsProviderProps> = ({ children }) 
       
       toast.success('댓글이 작성되었습니다.');
       return newComment;
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || '댓글 작성에 실패했습니다.';
+    } catch (error) {
+      const errorMessage = getErrorMessage(error as ApiError);
       setState(prev => ({ 
         ...prev, 
         isLoading: false, 
@@ -192,8 +207,8 @@ export const CommentsProvider: React.FC<CommentsProviderProps> = ({ children }) 
       
       toast.success('댓글이 수정되었습니다.');
       return true;
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || '댓글 수정에 실패했습니다.';
+    } catch (error) {
+      const errorMessage = getErrorMessage(error as ApiError);
       setState(prev => ({ 
         ...prev, 
         isLoading: false, 
@@ -236,8 +251,8 @@ export const CommentsProvider: React.FC<CommentsProviderProps> = ({ children }) 
       
       toast.success('댓글이 삭제되었습니다.');
       return true;
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || '댓글 삭제에 실패했습니다.';
+    } catch (error) {
+      const errorMessage = getErrorMessage(error as ApiError);
       setState(prev => ({ 
         ...prev, 
         isLoading: false, 
@@ -277,8 +292,8 @@ export const CommentsProvider: React.FC<CommentsProviderProps> = ({ children }) 
       });
       
       return likes;
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || '좋아요에 실패했습니다.';
+    } catch (error) {
+      const errorMessage = getErrorMessage(error as ApiError);
       toast.error(errorMessage);
       throw error;
     }

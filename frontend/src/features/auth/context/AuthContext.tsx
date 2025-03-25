@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import { http } from '../../../shared/lib/http';
 import { API_ENDPOINTS } from '../../../shared/config/apiConfig';
 import { toast } from 'react-toastify';
@@ -26,10 +26,20 @@ type AuthActions = {
 };
 
 // Context 타입 정의
-type AuthContextType = AuthState & AuthActions;
+export type AuthContextType = AuthState & AuthActions;
+
+// API 에러 타입 정의
+interface ApiError {
+  response?: {
+    data?: {
+      message?: string;
+    };
+  };
+  message?: string;
+}
 
 // Context 생성
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Provider 컴포넌트 props 타입
 type AuthProviderProps = {
@@ -46,6 +56,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     error: null,
   });
 
+  // 에러 메시지 추출 헬퍼 함수
+  const getErrorMessage = (error: ApiError): string => {
+    return error.response?.data?.message || error.message || '알 수 없는 오류가 발생했습니다.';
+  };
+  
   // 초기 인증 상태 확인
   useEffect(() => {
     const checkAuth = async () => {
@@ -64,6 +79,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           error: null,
         });
       } catch (error) {
+        console.error('인증 오류:', error);
         localStorage.removeItem('token');
         setState({
           isLoggedIn: false,
@@ -75,7 +91,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     };
     
     checkAuth();
-  }, []);
+  }, []); // 컴포넌트 마운트 시 한 번만 실행
 
   // 로그인 액션
   const login = async (email: string, password: string) => {
@@ -97,15 +113,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       });
       
       toast.success('로그인되었습니다.');
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || '로그인에 실패했습니다.';
+    } catch (errorObj) {
+      const errorMessage = getErrorMessage(errorObj as ApiError);
       setState(prev => ({ 
         ...prev, 
         isLoading: false, 
         error: errorMessage,
       }));
       toast.error(errorMessage);
-      throw error;
+      throw errorObj;
     }
   };
 
@@ -126,6 +142,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       
       toast.success('로그아웃되었습니다.');
     } catch (error) {
+      console.error('로그아웃 오류:', error);
       setState(prev => ({ ...prev, isLoading: false }));
       toast.error('로그아웃 중 오류가 발생했습니다.');
     }
@@ -151,15 +168,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       });
       
       toast.success('회원가입이 완료되었습니다.');
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || '회원가입에 실패했습니다.';
+    } catch (errorObj) {
+      const errorMessage = getErrorMessage(errorObj as ApiError);
       setState(prev => ({ 
         ...prev, 
         isLoading: false, 
         error: errorMessage,
       }));
       toast.error(errorMessage);
-      throw error;
+      throw errorObj;
     }
   };
 
@@ -176,13 +193,4 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
-};
-
-// Custom Hook
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
 };

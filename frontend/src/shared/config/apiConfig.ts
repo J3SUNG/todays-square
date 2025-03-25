@@ -9,12 +9,14 @@ export const API_ENDPOINTS = {
   POSTS: {
     BASE: '/posts',
     DETAIL: (id: string) => `/posts/${id}`,
+    GET_BY_ID: (id: string) => `/posts/${id}`,
     COMMENTS: (postId: string) => `/posts/${postId}/comments`,
     LIKE: (id: string) => `/posts/${id}/like`,
   },
   COMMENTS: {
     BASE: '/comments',
     DETAIL: (id: string) => `/comments/${id}`,
+    GET_BY_ID: (id: string) => `/comments/${id}`,
     LIKE: (id: string) => `/comments/${id}/like`,
   },
 };

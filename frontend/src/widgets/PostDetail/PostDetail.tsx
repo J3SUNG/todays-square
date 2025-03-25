@@ -59,14 +59,14 @@ const ActionButtons = styled.div`
   gap: 12px;
 `;
 
-const LikeButton = styled.button`
+const LikeButton = styled.button<{ buttonTheme?: 'liked' | 'default' }>`
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  background-color: ${props => props.theme === 'liked' ? '#f8e6e6' : '#f8f9fa'};
-  color: ${props => props.theme === 'liked' ? '#e74c3c' : '#666'};
-  border: 1px solid ${props => props.theme === 'liked' ? '#e74c3c' : '#ddd'};
+  background-color: ${props => props.buttonTheme === 'liked' ? '#f8e6e6' : '#f8f9fa'};
+  color: ${props => props.buttonTheme === 'liked' ? '#e74c3c' : '#666'};
+  border: 1px solid ${props => props.buttonTheme === 'liked' ? '#e74c3c' : '#ddd'};
   border-radius: 4px;
   cursor: pointer;
   
@@ -90,7 +90,7 @@ export const PostDetail: React.FC<PostDetailProps> = ({ postId }) => {
   
   useEffect(() => {
     loadPost(postId);
-  }, [postId]);
+  }, [postId, loadPost]);
   
   const handleDelete = async () => {
     if (window.confirm('정말로 이 게시물을 삭제하시겠습니까?')) {
@@ -111,6 +111,7 @@ export const PostDetail: React.FC<PostDetailProps> = ({ postId }) => {
       await likePost(postId);
       setLiked(!liked);
     } catch (error) {
+      console.error('게시글 좋아요 처리 오류:', error);
       // 에러 처리는 likePost 핸들러 내부에서 수행
     }
   };
@@ -160,7 +161,7 @@ export const PostDetail: React.FC<PostDetailProps> = ({ postId }) => {
           <PostContent>{currentPost.content}</PostContent>
           
           <PostActions>
-            <LikeButton onClick={handleLike} theme={liked ? 'liked' : 'default'}>
+            <LikeButton onClick={handleLike} buttonTheme={liked ? 'liked' : 'default'}>
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill={liked ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
               </svg>

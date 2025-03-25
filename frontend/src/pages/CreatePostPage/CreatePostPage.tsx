@@ -24,7 +24,7 @@ export const CreatePostPage: React.FC = () => {
     try {
       const newPost = await createPost(data);
       navigate(`/posts/${newPost.id}`);
-    } catch (error) {
+    } catch {
       // 에러 처리는 createPost 핸들러 내부에서 수행
     }
   };
