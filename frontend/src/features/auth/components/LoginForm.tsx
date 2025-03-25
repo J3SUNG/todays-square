@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { useAuth } from '../context/AuthContext';
+import { useAuthStore } from '..';
 import { useNavigate } from 'react-router-dom';
 
 const FormContainer = styled.form`
@@ -77,7 +77,8 @@ const ErrorMessage = styled.div`
 
 export const LoginForm: React.FC = () => {
   const navigate = useNavigate();
-  const { login, isLoading, error } = useAuth();
+  const { isLoading, error } = useAuthStore();
+  const login = useAuthStore(state => state.login);
   const [formData, setFormData] = useState({
     email: '',
     password: '',

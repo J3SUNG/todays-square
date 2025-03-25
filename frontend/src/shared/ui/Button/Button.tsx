@@ -1,5 +1,6 @@
 import React, { ButtonHTMLAttributes } from 'react';
-import styled, { css } from '@emotion/styled';
+import styled from '@emotion/styled';
+import { css } from '@emotion/react';
 
 // SOLID의 Open-Closed 원칙을 적용한 버튼 컴포넌트
 // 확장에는 열려있고 수정에는 닫혀있는 설계
